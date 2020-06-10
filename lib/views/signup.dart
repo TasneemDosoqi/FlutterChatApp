@@ -37,12 +37,14 @@ class _SignUpState extends State<SignUp> {
                 height: 8,
               ),
               TextField(
+                controller: emailText,
                 decoration: textFieldInput("email"),
               ),
               SizedBox(
                 height: 8,
               ),
               TextField(
+                controller: passwordText,
                 decoration: textFieldInput("password"),
               ),
               SizedBox(

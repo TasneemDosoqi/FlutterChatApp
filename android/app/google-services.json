@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "298859945824",
+    "firebase_url": "https://tasneemchatapp.firebaseio.com",
+    "project_id": "tasneemchatapp",
+    "storage_bucket": "tasneemchatapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:298859945824:android:1d5ef1ea794128bec28805",
+        "android_client_info": {
+          "package_name": "com.example.chatflutterapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "298859945824-f35vur7vrgqrhi4anqt6rh66i2db7r07.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClRI8xBPSi2nhcfnR_FXPuP675k97R82Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "298859945824-f35vur7vrgqrhi4anqt6rh66i2db7r07.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
