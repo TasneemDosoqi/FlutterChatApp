@@ -1,7 +1,13 @@
 import 'package:chatflutterapp/Services/Authentication.dart';
 import 'package:chatflutterapp/widgets/widget.dart';
 import 'package:flutter/material.dart';
+
+import 'chatRoomScreen.dart';
 class SignUp extends StatefulWidget {
+
+  final Function toggle ;
+  SignUp(this.toggle);
+
   @override
   _SignUpState createState() => _SignUpState();
 }
@@ -23,7 +29,11 @@ class _SignUpState extends State<SignUp> {
       });
 
      auth.SignUpEandP(emailText.text, passwordText.text).then((val){
-       print("$val");
+       //print("${val.uid}");
+
+       Navigator.pushReplacement(context, MaterialPageRoute(
+         builder: (context) => ChatRoom()
+       ));
       });
 
 
@@ -88,18 +98,6 @@ class _SignUpState extends State<SignUp> {
               SizedBox(
                 height: 5,
               ),
-              Container(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 8,
-                  ),
-                  child: Text(
-                    "Forget Password?",
-                    style: simpleText(),
-                  ),
-                ),
-              ),
               SizedBox(
                 height: 20,
               ),
@@ -124,7 +122,7 @@ class _SignUpState extends State<SignUp> {
                 ),
               ),
               SizedBox(
-                height: 7,
+                height: 15,
               ),
               Container(
                 alignment: Alignment.center,
@@ -148,11 +146,19 @@ class _SignUpState extends State<SignUp> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("Already have account ?",style: medimText(), ),
-                  Text("SignIn now",style: TextStyle(
-                    fontSize: 18,
-                    color: Color(0xff464B53),
-                    decoration: TextDecoration.underline,
-                  ),),
+                  GestureDetector(
+                    onTap: (){
+                      widget.toggle();
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      child: Text("SignIn now",style: TextStyle(
+                        fontSize: 18,
+                        color: Color(0xff464B53),
+                        decoration: TextDecoration.underline,
+                      ),),
+                    ),
+                  ),
                 ],
               ),
               SizedBox(

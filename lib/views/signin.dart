@@ -2,11 +2,16 @@ import 'package:chatflutterapp/widgets/widget.dart';
 import 'package:flutter/material.dart';
 
 class Signin extends StatefulWidget {
+
+  final Function toggle ;
+  Signin(this.toggle);
+
   @override
   _SigninState createState() => _SigninState();
 }
 
 class _SigninState extends State<Signin> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,7 +73,7 @@ class _SigninState extends State<Signin> {
                 ),
               ),
               SizedBox(
-                height: 10,
+                height: 15,
               ),
               Container(
                 alignment: Alignment.center,
@@ -92,11 +97,19 @@ class _SigninState extends State<Signin> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("Don't have account ?",style: medimText(), ),
-                  Text("Sign up for free",style: TextStyle(
-                    fontSize: 18,
-                    color: Color(0xff464B53),
-                    decoration: TextDecoration.underline,
-                  ),),
+                  GestureDetector(
+                    onTap: (){
+                      widget.toggle();
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      child: Text("Sign up for free",style: TextStyle(
+                        fontSize: 18,
+                        color: Color(0xff464B53),
+                        decoration: TextDecoration.underline,
+                      ),),
+                    ),
+                  ),
                 ],
               ),
               SizedBox(
