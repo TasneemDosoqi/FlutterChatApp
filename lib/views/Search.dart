@@ -5,6 +5,9 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
+
+  TextEditingController searchText = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,6 +31,7 @@ class _SearchState extends State<Search> {
                 children: [
                   Expanded(
                       child: TextField(
+                        controller: searchText,
                         style: TextStyle(
                           fontSize: 18,
                           color: Colors.white,
