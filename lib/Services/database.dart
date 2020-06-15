@@ -6,7 +6,20 @@ class DatabaseMethods {
     return await Firestore.instance.collection("Users").where("Name" , isEqualTo: Username ).getDocuments();
   }
 
+  getUserByUserEmail(String Email) async {
+    return await Firestore.instance.collection("Users").where("Email" , isEqualTo: Email ).getDocuments();
+  }
+
   uploadUserInfo(userMap){
-    Firestore.instance.collection("Users").add(userMap);
+    Firestore.instance.collection("Users").add(userMap).catchError((e){
+      print(e.toString());
+    });
+  }
+  
+  createChatroom(String ID, chatRoomMap){
+    Firestore.instance.collection("ChatRoom").document(ID)
+        .setData(chatRoomMap).catchError((e){
+          print(e.toString());
+    });
   }
 }

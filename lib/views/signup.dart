@@ -1,5 +1,6 @@
 import 'package:chatflutterapp/Services/Authentication.dart';
 import 'package:chatflutterapp/Services/database.dart';
+import 'package:chatflutterapp/helper/helperFunctions.dart';
 import 'package:chatflutterapp/widgets/widget.dart';
 import 'package:flutter/material.dart';
 
@@ -22,6 +23,7 @@ class _SignUpState extends State<SignUp> {
   TextEditingController emailText = new TextEditingController();
   TextEditingController passwordText = new TextEditingController();
 
+
   DatabaseMethods databaseMethods = new DatabaseMethods();
 
   SignInUser() {
@@ -36,8 +38,11 @@ class _SignUpState extends State<SignUp> {
           "Email": emailText.text
         };
 
-        databaseMethods.uploadUserInfo(userInfoMap);
+        helperFunction.saveUsername(userNameText.text);
+        helperFunction.saveUserEmail(emailText.text);
 
+        databaseMethods.uploadUserInfo(userInfoMap);
+        helperFunction.saveUserLoggedIn(true);
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => ChatRoom()));
       });

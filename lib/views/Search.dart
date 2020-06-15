@@ -46,11 +46,17 @@ class _SearchState extends State<Search> {
         }) : Container();
   }
 
-
   @override
   void initState() {
     super.initState();
   }
+
+  startConversation( String username){
+   // List <String> users = [username, ]
+   // databaseMethods.createChatroom(ID, chatRoomMap);
+  }
+
+
 
 
   @override
