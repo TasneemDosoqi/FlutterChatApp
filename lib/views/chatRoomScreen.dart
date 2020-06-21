@@ -1,8 +1,8 @@
 import 'package:chatflutterapp/Services/Authentication.dart';
 import 'package:chatflutterapp/helper/authenticate.dart';
+import 'package:chatflutterapp/helper/constants.dart';
+import 'package:chatflutterapp/helper/helperFunctions.dart';
 import 'package:chatflutterapp/views/Search.dart';
-import 'package:chatflutterapp/views/signin.dart';
-import 'package:chatflutterapp/widgets/widget.dart';
 import 'package:flutter/material.dart';
 
 class ChatRoom extends StatefulWidget {
@@ -12,6 +12,17 @@ class ChatRoom extends StatefulWidget {
 
 class _ChatRoomState extends State<ChatRoom> {
   Auth auth = new Auth();
+
+  @override
+  void initState() {
+    getUserInfo();
+    super.initState();
+  }
+
+  getUserInfo() async {
+
+    Constants.myName = await helperFunction.getUsername();
+  }
 
   @override
   Widget build(BuildContext context) {
