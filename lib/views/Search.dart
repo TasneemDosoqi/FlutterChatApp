@@ -59,7 +59,7 @@ class _SearchState extends State<Search> {
       };
       DatabaseMethods().createChatroom(chatroomId, chatRoomMap);
       Navigator.push(context, MaterialPageRoute(
-          builder: (context) => conversationScreen()
+          builder: (context) => conversationScreen(chatroomId)
       ));
     }else{
       print("you can not send message to yourself");

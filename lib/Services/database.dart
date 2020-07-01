@@ -31,4 +31,15 @@ class DatabaseMethods {
           print(e.toString());
     });
   }
+  
+  addConvMessages(String ChatroomID ,MessageMap){
+    Firestore.instance.collection("ChatRoom").document(ChatroomID).collection("Chats")
+        .add(MessageMap).catchError((e){print(e.toString());});
+  }
+
+  getConvMessages(String ChatroomID ) async {
+    return await Firestore.instance.collection("ChatRoom").document(ChatroomID).collection("Chats").orderBy("Time" ,descending: false)
+        .snapshots();
+  }
+  
 }
