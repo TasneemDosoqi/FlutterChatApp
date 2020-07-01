@@ -25,39 +25,40 @@ class _SigninState extends State<Signin> {
   Auth auth = new Auth();
   DatabaseMethods databaseMethods = new DatabaseMethods();
 
-  QuerySnapshot snapshotUserInfo;
   bool isLoading = false;
   
-  void signIn() {
+  void signIn() async {
     if(formKey.currentState.validate()){
-      helperFunction.saveUserEmail(emailText.text);
       setState(() {
         isLoading =true;
       });
+      await auth.SignInEandP(emailText.text, passText.text).then((value){
+        if(value != null){
+          QuerySnapshot snapshotUserInfo =  databaseMethods.getUserInfo(emailText.text);
+          helperFunction.saveUserLoggedIn(true);
+          helperFunction.saveUsername(snapshotUserInfo.documents[0].data["Name"]);
+          helperFunction.saveUserEmail(snapshotUserInfo.documents[0].data["Email"]);
+
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => ChatRoom()));
+        }else {
+          setState(() {
+            isLoading = false;
+          });
+        }
+      });
     }
-    databaseMethods.getUserByUserEmail(emailText.text).then((val){
-      snapshotUserInfo=val;
-      helperFunction.saveUsername(snapshotUserInfo.documents[0].data["Name"]);
-
-    });
-
-    auth.SignInEandP(emailText.text, passText.text).then((value){
-      if(value != null){
-        helperFunction.saveUserLoggedIn(true);
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => ChatRoom()));
-      }
-
-    });
-    
-
   }
   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(context),
-      body: SingleChildScrollView(
+      body: isLoading ?
+      Container(
+        child: Center( child: CircularProgressIndicator()),
+      )
+      : SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height -100,
           alignment: Alignment.bottomCenter,
@@ -189,6 +190,4 @@ class _SigninState extends State<Signin> {
       ),
     );
   }
-
-  
 }

@@ -30,7 +30,6 @@ class _SearchState extends State<Search> {
         }) : Container();
   }
 
-
   InitiateSearch() async {
     if (searchText.text.isNotEmpty) {
       setState(() {
@@ -48,7 +47,6 @@ class _SearchState extends State<Search> {
       });
     }
   }
-
 
   startConversation( { String username }){
 
@@ -119,9 +117,9 @@ class _SearchState extends State<Search> {
         child: Center(
           child: CircularProgressIndicator(),
         ),
-      ) : Container(
+      ) :
+      Container(
         alignment: Alignment.center,
-
         child: Column(
           children: [
             SizedBox(
@@ -171,7 +169,6 @@ class _SearchState extends State<Search> {
     );
   }
 }
-
 
 getChatRoomId(String a, String b) {
   if (a.substring(0, 1).codeUnitAt(0) > b.substring(0, 1).codeUnitAt(0)) {
