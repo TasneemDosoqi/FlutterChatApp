@@ -7,10 +7,8 @@ import 'package:flutter/material.dart';
 
 import 'chatRoomScreen.dart';
 
-
 class Signin extends StatefulWidget {
-
-  final Function toggle ;
+  final Function toggle;
   Signin(this.toggle);
 
   @override
@@ -18,7 +16,6 @@ class Signin extends StatefulWidget {
 }
 
 class _SigninState extends State<Signin> {
-  
   final formKey = GlobalKey<FormState>();
   TextEditingController emailText = new TextEditingController();
   TextEditingController passText = new TextEditingController();
@@ -26,22 +23,25 @@ class _SigninState extends State<Signin> {
   DatabaseMethods databaseMethods = new DatabaseMethods();
 
   bool isLoading = false;
-  
+
   void signIn() async {
-    if(formKey.currentState.validate()){
+    if (formKey.currentState.validate()) {
       setState(() {
-        isLoading =true;
+        isLoading = true;
       });
-      await auth.SignInEandP(emailText.text, passText.text).then((value){
-        if(value != null){
-          QuerySnapshot snapshotUserInfo =  databaseMethods.getUserInfo(emailText.text);
+      await auth.SignInEandP(emailText.text, passText.text).then((value) {
+        if (value != null) {
+          QuerySnapshot snapshotUserInfo =
+              databaseMethods.getUserInfo(emailText.text);
           helperFunction.saveUserLoggedIn(true);
-          helperFunction.saveUsername(snapshotUserInfo.documents[0].data["Name"]);
-          helperFunction.saveUserEmail(snapshotUserInfo.documents[0].data["Email"]);
+          helperFunction
+              .saveUsername(snapshotUserInfo.documents[0].data["Name"]);
+          helperFunction
+              .saveUserEmail(snapshotUserInfo.documents[0].data["Email"]);
 
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => ChatRoom()));
-        }else {
+        } else {
           setState(() {
             isLoading = false;
           });
@@ -49,145 +49,157 @@ class _SigninState extends State<Signin> {
       });
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(context),
-      body: isLoading ?
-      Container(
-        child: Center( child: CircularProgressIndicator()),
-      )
-      : SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height -100,
-          alignment: Alignment.bottomCenter,
-          padding: EdgeInsets.symmetric(horizontal: 30),
-          child: Column(
-            mainAxisSize: MainAxisSize.min ,
-            children: [
-              Image(
-                image: AssetImage('assets/images/logo.png'),
-              ),
-              Form(
-                key: formKey,
+      body: isLoading
+          ? Container(
+              child: Center(child: CircularProgressIndicator()),
+            )
+          : SingleChildScrollView(
+              child: Container(
+                height: MediaQuery.of(context).size.height - 100,
+                alignment: Alignment.bottomCenter,
+                padding: EdgeInsets.symmetric(horizontal: 30),
                 child: Column(
-                  children: <Widget>[
-                    SizedBox(
-                      height: 70,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image(
+                      image: AssetImage('assets/images/logo.png'),
                     ),
-                    TextFormField(
-                      validator: (val) {
-                        return RegExp(
-                            r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
-                            .hasMatch(val)
-                            ? null
-                            : "Please provide valid email ";
+                    Form(
+                      key: formKey,
+                      child: Column(
+                        children: <Widget>[
+                          SizedBox(
+                            height: 70,
+                          ),
+                          TextFormField(
+                            validator: (val) {
+                              return RegExp(
+                                          r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
+                                      .hasMatch(val)
+                                  ? null
+                                  : "Please provide valid email ";
+                            },
+                            controller: emailText,
+                            decoration: textFieldInput("email"),
+                          ),
+                          SizedBox(
+                            height: 8,
+                          ),
+                          TextFormField(
+                            obscureText: true,
+                            validator: (val) {
+                              return val.length > 6
+                                  ? null
+                                  : "Please provide password +6 character";
+                            },
+                            controller: passText,
+                            decoration: textFieldInput("password"),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      alignment: Alignment.centerRight,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          vertical: 8,
+                        ),
+                        child: Text(
+                          "Forget Password?",
+                          style: simpleText(),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        signIn();
                       },
-                      controller: emailText,
-                      decoration: textFieldInput("email"),
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: MediaQuery.of(context).size.width,
+                        padding: EdgeInsets.symmetric(
+                          vertical: 18,
+                        ),
+                        decoration: BoxDecoration(
+                            color: Color(0xffB9789F),
+                            borderRadius: BorderRadius.circular(30)),
+                        child: Text(
+                          "Sign In",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
                     ),
                     SizedBox(
-                      height: 8,
+                      height: 15,
                     ),
-                    TextFormField(
-                      obscureText: true,
-                      validator: (val) {
-                          return val.length > 6
-                              ? null
-                              : "Please provide password +6 character";
-                        },
-                      controller: passText,
-                      decoration: textFieldInput("password"),
+                    Container(
+                      alignment: Alignment.center,
+                      width: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.symmetric(
+                        vertical: 18,
+                      ),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Color(0xffB9789F),
+                          ),
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Text(
+                        "Sign In with Google",
+                        style: TextStyle(
+                          color: Color(0xffB9789F),
+                          fontSize: 20,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Don't have account ?",
+                          style: medimText(),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            widget.toggle();
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 10),
+                            child: Text(
+                              "Sign up for free",
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Color(0xff464B53),
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 50,
                     ),
                   ],
                 ),
               ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 8,
-                  ),
-                  child: Text(
-                    "Forget Password?",
-                    style: simpleText(),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              GestureDetector(
-                onTap: (){
-                  signIn();
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  width: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.symmetric(vertical: 18,),
-                  decoration: BoxDecoration(
-                    color: Color(0xffB9789F),
-                    borderRadius: BorderRadius.circular(30)
-                  ),
-                  child: Text("Sign In",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Container(
-                alignment: Alignment.center,
-                width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.symmetric(vertical: 18,),
-                decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xffB9789F),),
-                    borderRadius: BorderRadius.circular(30)
-                ),
-                child: Text("Sign In with Google",
-                  style: TextStyle(
-                    color: Color(0xffB9789F),
-                    fontSize: 20,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Don't have account ?",style: medimText(), ),
-                  GestureDetector(
-                    onTap: (){
-                      widget.toggle();
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      child: Text("Sign up for free",style: TextStyle(
-                        fontSize: 18,
-                        color: Color(0xff464B53),
-                        decoration: TextDecoration.underline,
-                      ),),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 50,
-              ),
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 }

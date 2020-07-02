@@ -23,7 +23,6 @@ class _SignUpState extends State<SignUp> {
   TextEditingController emailText = new TextEditingController();
   TextEditingController passwordText = new TextEditingController();
 
-
   DatabaseMethods databaseMethods = new DatabaseMethods();
 
   SignInUser() {
